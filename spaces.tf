@@ -3,6 +3,10 @@ resource "digitalocean_spaces_bucket" "terraform_state" {
   region = "lon1"
   acl    = "private"
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   versioning {
     enabled = true
   }
@@ -17,6 +21,4 @@ resource "digitalocean_spaces_bucket" "terraform_state" {
 
     abort_incomplete_multipart_upload_days = 7
   }
-
-  force_destroy = false
 }
