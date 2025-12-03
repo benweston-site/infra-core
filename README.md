@@ -1,4 +1,4 @@
-# Infra Core
+# Infra - Core
 
 <div align="justify">
 
