@@ -4,7 +4,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "7.13.0"
+      version = "~> 7.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -18,8 +18,7 @@ terraform {
 }
 
 provider "google" {
-  region = var.gcp_region
-
+  region = var.region
   default_labels = {
     env        = var.env
     managed_by = "terraform"

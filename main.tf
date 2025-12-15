@@ -1,8 +1,28 @@
+resource "google_folder" "platform" {
+  display_name        = "fldr-platform"
+  parent              = "organizations/${var.org_id}"
+  deletion_protection = true
+}
+
+resource "google_folder" "apps" {
+  display_name        = "fldr-apps"
+  parent              = "organizations/${var.org_id}"
+  deletion_protection = true
+}
+
+resource "google_folder" "sandbox" {
+  display_name        = "fldr-sandbox"
+  parent              = "organizations/${var.org_id}"
+  deletion_protection = true
+}
+
 resource "google_project" "infra_core" {
-  name            = "Infra - Core"
-  project_id      = "infra-core-${random_integer.suffix.result}"
-  billing_account = var.billing_account_id
-  deletion_policy = "DELETE"
+  name                = "Infra - Core"
+  project_id          = "infra-core-${random_integer.suffix.result}"
+  folder_id           = google_folder.platform.name
+  billing_account     = var.billing_account_id
+  auto_create_network = false
+  deletion_policy     = "PREVENT"
 }
 
 resource "google_project_service" "enabled_apis" {
@@ -25,6 +45,5 @@ resource "google_project_service" "enabled_apis" {
 
 resource "time_sleep" "wait_for_apis" {
   create_duration = "60s"
-
-  depends_on = [google_project_service.enabled_apis]
+  depends_on      = [google_project_service.enabled_apis]
 }

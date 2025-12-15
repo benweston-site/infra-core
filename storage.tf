@@ -1,18 +1,15 @@
 resource "google_storage_bucket" "terraform_state" {
   name          = "tfstate-${random_integer.suffix.result}"
-  location      = "EUROPE-WEST2"
+  location      = var.region
   project       = google_project.infra_core.project_id
   storage_class = "STANDARD"
 
   public_access_prevention    = "enforced"
   uniform_bucket_level_access = true
+  force_destroy               = false
 
   versioning {
     enabled = true
-  }
-
-  lifecycle {
-    prevent_destroy = true
   }
 
   lifecycle_rule {
@@ -21,8 +18,7 @@ resource "google_storage_bucket" "terraform_state" {
     }
     condition {
       days_since_noncurrent_time = 90
-
-      num_newer_versions = 5
+      num_newer_versions         = 5
     }
   }
 
@@ -35,7 +31,9 @@ resource "google_storage_bucket" "terraform_state" {
     }
   }
 
-  hierarchical_namespace { enabled = false }
+  hierarchical_namespace {
+    enabled = false
+  }
 
   soft_delete_policy {
     retention_duration_seconds = 604800
@@ -44,5 +42,9 @@ resource "google_storage_bucket" "terraform_state" {
   labels = {
     service    = "infra-core"
     data_class = "restricted"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
