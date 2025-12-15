@@ -4,4 +4,4 @@
 
 ## License
 
-The `infra-core` repository contents are provided under the [MIT License](https://github.com/benweston/infra-core/blob/main/LICENSE).   
+The `infra-core` repository contents are provided under the [MIT License](https://github.com/benweston-site/infra-core/blob/main/LICENSE).   
