@@ -6,7 +6,7 @@ resource "google_storage_bucket" "terraform_state" {
 
   public_access_prevention    = "enforced"
   uniform_bucket_level_access = true
-  force_destroy               = false
+  force_destroy               = true
 
   versioning {
     enabled = true
@@ -45,6 +45,6 @@ resource "google_storage_bucket" "terraform_state" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
