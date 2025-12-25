@@ -112,6 +112,9 @@ terraform.rc
 # Terraform local state backup directory
 state-backups/
 
+# Backup for local backend
+backend.tf.bak
+
 ### Vim ###
 # Swap
 [._]*.s[a-v][a-z]
